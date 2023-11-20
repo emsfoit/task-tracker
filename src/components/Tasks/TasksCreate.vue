@@ -25,7 +25,7 @@ const dueDate = ref(getTodayDate())
 const createTask = () => {
   let dueDateAsDate = new Date(dueDate.value)
   let task: Task = {
-    id: Math.random(),
+    id: tasksStore.tasks.length + 1,
     title: title.value,
     description: description.value,
     dueDate: dueDateAsDate,
