@@ -50,6 +50,9 @@ export const useTaskStore = defineStore('tasks', () => {
     tasks.value.push(task)
     updateLocalStore()
   }
+  function getTask(id: number) {
+    return tasks.value.find((task) => task.id == id)
+  }
   function removeTask(id: number) {
     const index = tasks.value.findIndex((task) => task.id == id)
     tasks.value.splice(index, 1)
@@ -82,6 +85,7 @@ export const useTaskStore = defineStore('tasks', () => {
     filteredTasks,
 
     addTask,
+    getTask,
     removeTask,
     toggleDone,
     updateFilter,

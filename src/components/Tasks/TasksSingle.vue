@@ -2,7 +2,9 @@
   <tr>
     <th class="content">
       <div class="tooltip">
-        {{ shortenText(task.title) }}
+        <router-link :to="{ name: 'task-show', params: { id: task.id } }">
+          {{ shortenText(task.title) }}
+        </router-link>
         <span class="tooltiptext">{{ shortenText(task.title) }}</span>
       </div>
     </th>
