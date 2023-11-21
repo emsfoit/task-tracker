@@ -1,11 +1,12 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
-import type { Task, TasksFilter, TasksOrder } from '@/types'
+import { TaskStatus, type Task, type TasksFilter, type TasksOrder } from '@/types'
 
 export const useTaskStore = defineStore('tasks', () => {
   // read from local storage
   const localTasks = localStorage.getItem('tasks') || '[]'
   const tasks = ref<Task[]>(JSON.parse(localTasks))
+
   const filter = ref(<TasksFilter>{
     status: 'all',
     title: ''
@@ -14,26 +15,24 @@ export const useTaskStore = defineStore('tasks', () => {
     orderBy: 'dueDate',
     order: 'asc'
   })
+  // define computed values
   const filteredTasks = computed(() => {
-    // status can be all, done, or pending
+    const { status, title } = filter.value
     return tasks.value.filter((task) => {
-      if (filter.value.status == 'all' && filter.value.title == '') return true
-      if (filter.value.status == 'all' && filter.value.title != '') {
-        return task.title.toLowerCase().includes(filter.value.title)
+      const lowerCaseTitle = task.title.toLowerCase()
+      const titleMatches = !title || lowerCaseTitle.includes(title.toLowerCase())
+      switch (status) {
+        case 'all':
+          return titleMatches
+        case 'done':
+          return titleMatches && task.status === TaskStatus.DONE
+        case 'in_progress':
+          return titleMatches && task.status == TaskStatus.IN_PROGRESS
+        case 'open':
+          return titleMatches && task.status === TaskStatus.OPEN
+        default:
+          return true
       }
-      if (filter.value.status == 'done' && filter.value.title == '') {
-        return task.done
-      }
-      if (filter.value.status == 'done' && filter.value.title != '') {
-        return task.done && task.title.toLowerCase().includes(filter.value.title)
-      }
-      if (filter.value.status == 'pending' && filter.value.title == '') {
-        return !task.done
-      }
-      if (filter.value.status == 'pending' && filter.value.title != '') {
-        return !task.done && task.title.toLowerCase().includes(filter.value.title)
-      }
-      return true
     })
   })
 
@@ -46,9 +45,9 @@ export const useTaskStore = defineStore('tasks', () => {
       }
     })
   })
+  // define store functions
   function addTask(task: Task) {
     tasks.value.push(task)
-    updateLocalStore()
   }
   function getTask(id: number) {
     return tasks.value.find((task) => task.id == id)
@@ -56,25 +55,30 @@ export const useTaskStore = defineStore('tasks', () => {
   function removeTask(id: number) {
     const index = tasks.value.findIndex((task) => task.id == id)
     tasks.value.splice(index, 1)
-    updateLocalStore()
   }
-  function toggleDone(id: number) {
+  function updateTaskStatus(id: number) {
     const index = tasks.value.findIndex((task) => task.id == id)
-    tasks.value[index].done = !tasks.value[index].done
-    updateLocalStore()
+    const status = tasks.value[index].status
+    if (status == 'OPEN') {
+      tasks.value[index].status = TaskStatus.IN_PROGRESS
+    } else if (status == 'IN_PROGRESS') {
+      tasks.value[index].status = TaskStatus.DONE
+    } else {
+      tasks.value[index].status = TaskStatus.OPEN
+    }
   }
-
   function updateLocalStore() {
     localStorage.setItem('tasks', JSON.stringify(tasks.value))
   }
-
   function updateFilter(newFilter: TasksFilter) {
     filter.value = { ...filter.value, ...newFilter }
   }
-
   function updateOrder(newOrder: TasksOrder) {
     order.value = { ...order.value, ...newOrder }
   }
+  watch(tasks, () => {
+    updateLocalStore()
+  }, { deep: true })
 
   return {
     tasks,
@@ -87,7 +91,7 @@ export const useTaskStore = defineStore('tasks', () => {
     addTask,
     getTask,
     removeTask,
-    toggleDone,
+    updateTaskStatus,
     updateFilter,
     updateOrder
   }
