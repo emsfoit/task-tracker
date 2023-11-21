@@ -8,8 +8,9 @@ export const de = {
     name: 'Aufgabe',
     name_plural: 'Aufgaben',
     actions: {
-      name: "Aktionen",
+      name: 'Aktionen',
       create: 'Aufgabe erstellen',
+      go_back: 'Zurück'
     },
     att: {
       title: 'Titel',
@@ -23,6 +24,7 @@ export const de = {
       open: 'Offen',
       in_progress: 'In Bearbeitung',
       done: 'Erledigt'
-    }
+    },
+    next_status: 'Nächster Status'
   }
 }

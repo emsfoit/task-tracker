@@ -10,6 +10,7 @@ export const en = {
     actions: {
       name: "Actions",
       create: 'Create Task',
+      go_back: 'Go Back'
     },
     att: {
       title: 'Title',
@@ -23,6 +24,7 @@ export const en = {
       open: 'Open',
       in_progress: 'In Progress',
       done: 'Done'
-    }
+    },
+    next_status: 'Next Status',
   }
 }
