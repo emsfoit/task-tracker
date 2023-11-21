@@ -4,11 +4,11 @@
     <select v-model="status" class="item">
       <option value="all">{{ $t('task.status.all') }}</option>
       <option value="in_progress">{{ $t('task.status.in_progress') }}</option>
-      <option value="pending">{{ $t('task.status.pending') }}</option>
+      <option value="open">{{ $t('task.status.open') }}</option>
       <option value="done">{{ $t('task.status.done') }}</option>
     </select>
     <!-- Filter using text field -->
-    <input v-model="title" class="item" type="text" placeholder="title" />
+    <input v-model="title" class="item" type="text" :placeholder="$t('task.att.title')" />
     <!-- Sort by  -->
     <select v-model="order" class="item">
       <option value="asc">{{ $t('order.asc') }}</option>
@@ -35,7 +35,6 @@ const orderBy = ref(tasksStore.order.orderBy)
 
 // Watch for changes in filter fields and update the store
 watch([title, status], () => {
-  console.log('title', title.value)
   tasksStore.updateFilter({ title: title.value.toLowerCase(), status: status.value })
 })
 
@@ -50,7 +49,7 @@ watch([order, orderBy], () => {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  background-color: #f9bcbc;
+  background-color: #E7E9EB;
   padding: 1rem;
   border: 1px solid #ccc;
 }

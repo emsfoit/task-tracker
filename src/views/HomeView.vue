@@ -36,11 +36,6 @@ const formIcon = computed(() => {
 </script>
 
 <style scoped>
-.header {
-  text-align: center;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-}
 .header2 {
   color: #343458;
   margin-bottom: 0.5rem;

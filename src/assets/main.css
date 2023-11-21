@@ -1,9 +1,76 @@
 @import './base.css';
 
 #app {
-  border: 1px solid black;
+  border: 1px solid #f3f3f3;
+  box-shadow: 0 0 5px 5px #f3f3f3;
   height: 100vh;
   overflow: auto;
-  padding: 20px; 
+  padding: 20px;
   padding-top: 0px;
+}
+/* Table shared style */
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td,
+th {
+  border: 1px solid #dddddd;
+  background-color: #f5f6f8;
+  border-collapse: collapse;
+  text-align: center;
+  padding: 8px;
+}
+th {
+  font-size: 20px;
+  font-weight: 600;
+}
+/* Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+/* Status style */
+td.open {
+  background-color: #e2445c;
+  color: #fff;
+}
+td.done {
+  background-color: #4caf50;
+  color: #fff;
+}
+td.in_progress {
+  background-color: #ffc107;
+  color: #fff;
+}
+/*  */
+.pointer {
+  cursor: pointer;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-size: 40px;
+  font-weight: bold;
 }
