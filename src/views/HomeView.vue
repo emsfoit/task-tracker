@@ -1,10 +1,17 @@
 <template>
   <main>
-    <h1 class="header">Tasks Tracker</h1>
+    <!-- Select language -->
+    <div class="locale-changer">
+      <select v-model="$i18n.locale">
+        <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">
+          {{ locale }}
+        </option>
+      </select>
+    </div>
+    <h1 class="header">{{ $t('task.task_tracker') }}</h1>
     <TasksSearch></TasksSearch>
     <h2 class="header2">
-      Tasks:
-
+      {{ $t('task.name_plural') }}:
       <Icon :icon="formIcon" :style="{}" @click="toggleCreateForm" />
     </h2>
     <TasksCreate v-if="showCreateForm"></TasksCreate>

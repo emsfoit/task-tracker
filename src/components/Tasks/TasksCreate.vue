@@ -1,21 +1,21 @@
 <template>
   <form class="taskCreateForm" @submit.prevent="createTask">
-    <label for="title">Title:</label>
+    <label for="title">{{ $t('task.att.title') }}:</label>
     <input type="text" id="title" v-model="title" required />
 
-    <label for="description">Description:</label>
+    <label for="description">{{ $t('task.att.description') }}:</label>
     <textarea id="description" v-model="description" required></textarea>
 
-    <label for="dueDate">Due Date:</label>
+    <label for="dueDate">{{ $t('task.att.duedate') }}</label>
     <input type="date" id="dueDate" v-model="dueDate" required />
 
-    <button type="submit">Create Task</button>
+    <button type="submit">{{ $t('task.actions.create') }}</button>
   </form>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { type Task } from '@/types'
+import { TaskStatus, type Task } from '@/types'
 import { useTaskStore } from '../../stores/tasks'
 // import add task from store
 const tasksStore = useTaskStore()
@@ -29,7 +29,7 @@ const createTask = () => {
     title: title.value,
     description: description.value,
     dueDate: dueDateAsDate,
-    done: false,
+    status: TaskStatus.OPEN,
     createdAt: new Date()
   }
   tasksStore.addTask(task)

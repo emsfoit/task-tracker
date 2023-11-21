@@ -17,7 +17,7 @@
 
     <th>{{ formatDate(task.dueDate, true) || '-' }}</th>
     <th>{{ formatDate(task.createdAt) || '-' }}</th>
-    <th>{{ task.done || '-' }}</th>
+    <th>{{ task.status }}</th>
     <th class="buttons">
       <Icon
         :icon="computedToggleIcon"
@@ -52,11 +52,11 @@ const props = defineProps({
   }
 })
 const computedToggleIcon = computed(() => {
-  return props.task.done ? 'raphael:checked' : 'material-symbols:pending-actions-rounded'
+  return props.task.status == 'DONE' ? 'raphael:checked' : 'material-symbols:pending-actions-rounded'
 })
 
 const computedToggleColor = computed(() => {
-  return props.task.done ? 'green' : 'black'
+  return props.task.status == 'DONE' ? 'green' : 'black'
 })
 
 const removeTask = (taskId: number) => {

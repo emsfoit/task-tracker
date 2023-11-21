@@ -1,7 +1,7 @@
 <template>
   <main>
-    <h1 class="header">Task</h1>
-    <TaskShow :task="getTask"></TaskShow>
+    <h1 class="header">{{ $t('task.name') }}</h1>
+    <TaskShow v-if="getTask.id" :task="getTask"></TaskShow>
   </main>
 </template>
 

@@ -1,9 +1,14 @@
 // define task type
+export enum TaskStatus {
+    OPEN = 'OPEN',
+    IN_PROGRESS = 'IN_PROGRESS',
+    DONE = 'DONE',
+}
 export interface Task {
     id: number;
     title: string;
     description: string;
-    done?: boolean;
+    status: TaskStatus;
     dueDate?: Date;
     createdAt?: Date;
 }

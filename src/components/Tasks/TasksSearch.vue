@@ -2,22 +2,23 @@
   <form @submit.prevent="" class="container">
     <!-- Filter using status done, not done -->
     <select v-model="status" class="item">
-      <option value="all">All</option>
-      <option value="done">Done</option>
-      <option value="pending">Pending</option>
+      <option value="all">{{ $t('task.status.all') }}</option>
+      <option value="in_progress">{{ $t('task.status.in_progress') }}</option>
+      <option value="pending">{{ $t('task.status.pending') }}</option>
+      <option value="done">{{ $t('task.status.done') }}</option>
     </select>
     <!-- Filter using text field -->
     <input v-model="title" class="item" type="text" placeholder="title" />
     <!-- Sort by  -->
     <select v-model="order" class="item">
-      <option value="asc">Ascending</option>
-      <option value="desc">Descending</option>
+      <option value="asc">{{ $t('order.asc') }}</option>
+      <option value="desc">{{ $t('order.desc') }}</option>
     </select>
     <!-- Sort by  -->
     <select v-model="orderBy" class="item">
-      <option value="title">Title</option>
-      <option value="dueDate">Due date</option>
-      <option value="created_at">Created At</option>
+      <option value="title">{{ $t('task.att.title') }}</option>
+      <option value="dueDate">{{ $t('task.att.duedate') }}</option>
+      <option value="created_at">{{ $t('task.att.created_at') }}</option>
     </select>
   </form>
 </template>

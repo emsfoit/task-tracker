@@ -5,27 +5,27 @@
       style="width: 100%; border-collapse: collapse; border: 1px solid black;"
     >
       <tr>
-        <th>Task</th>
+        <th>{{ $t("task.att.title") }}</th>
         <th>{{ task.title }}</th>
       </tr>
       <tr>
-        <th>Description</th>
+        <th>{{ $t('task.att.description') }}</th>
         <th>{{ task.description }}</th>
       </tr>
       <tr>
-        <th>Due Date</th>
+        <th>{{ $t('task.att.duedate') }}</th>
         <th>{{ task.dueDate }}</th>
       </tr>
       <tr>
-        <th>Created At</th>
+        <th>{{ $t('task.att.created_at') }}</th>
         <th>{{ task.createdAt }}</th>
       </tr>
       <tr>
-        <th>Status</th>
-        <th>{{ task.done }}</th>
+        <th>{{ $t('task.att.status') }}</th>
+        <th>{{ task.status }}</th>
       </tr>
       <tr>
-        <th>Actions</th>
+        <th>{{ $t('task.actions.name') }}</th>
         <th>
           <button @click="removTask(task.id)">Delete</button>
         </th>
