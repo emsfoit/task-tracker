@@ -25,7 +25,8 @@ const route = useRoute()
 const taskId = computed(() => Number(route.params.id))
 
 // get task from store
-const getTask = computed(() => tasksStore.getTask(taskId.value) as Task)
+// TODO: fix get Task
+const getTask = tasksStore.getTask(taskId.value)
 </script>
 
 <style scoped>

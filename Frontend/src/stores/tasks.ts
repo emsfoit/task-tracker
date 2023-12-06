@@ -1,11 +1,20 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { TaskStatus, type Task, type TasksFilter, type TasksOrder } from '@/types'
+import axios, { type AxiosResponse } from 'axios'
+
 
 export const useTaskStore = defineStore('tasks', () => {
+
+
   // read from local storage
-  const localTasks = localStorage.getItem('tasks') || '[]'
-  const tasks = ref<Task[]>(JSON.parse(localTasks))
+  const tasks = ref<Task[]>([])
+
+  async function fetchTasks() {
+    return axios.get('http://localhost:3000/tasks').then((response) => {
+      tasks.value = response.data
+    })
+  }
 
   const filter = ref(<TasksFilter>{
     status: 'all',
@@ -46,15 +55,23 @@ export const useTaskStore = defineStore('tasks', () => {
     })
   })
   // define store functions
-  function addTask(task: Task) {
-    tasks.value.push(task)
+  async function addTask(task: Task) {
+    const { data }: AxiosResponse = await axios.post('http://localhost:3000/tasks', task)
+    tasks.value.push(data)
+    return 
   }
-  function getTask(id: number) {
-    return tasks.value.find((task) => task.id == id)
+  async function getTask(id: number) {
+    const { data }: AxiosResponse = await axios.get(`http://localhost:3000/tasks/${id}`)
+    return data as Task
   }
-  function removeTask(id: number) {
-    const index = tasks.value.findIndex((task) => task.id == id)
-    tasks.value.splice(index, 1)
+  async function removeTask(id: number) {
+    const data : AxiosResponse = await axios.delete(`http://localhost:3000/tasks/${id}`)
+    if (data.status != 200) {
+      throw new Error('Failed to delete task')
+    } else {
+      const index = tasks.value.findIndex((task) => task.id == id)
+      tasks.value.splice(index, 1)
+    }
   }
   function updateTaskStatus(id: number) {
     const index = tasks.value.findIndex((task) => task.id == id)
@@ -76,9 +93,13 @@ export const useTaskStore = defineStore('tasks', () => {
   function updateOrder(newOrder: TasksOrder) {
     order.value = { ...order.value, ...newOrder }
   }
-  watch(tasks, () => {
-    updateLocalStore()
-  }, { deep: true })
+  watch(
+    tasks,
+    () => {
+      updateLocalStore()
+    },
+    { deep: true }
+  )
 
   return {
     tasks,
@@ -88,6 +109,7 @@ export const useTaskStore = defineStore('tasks', () => {
     orderedTasks,
     filteredTasks,
 
+    fetchTasks,
     addTask,
     getTask,
     removeTask,
