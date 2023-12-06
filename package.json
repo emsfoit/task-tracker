@@ -1,0 +1,9 @@
+{
+   "name": "task-tracker",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start:dev:backend": "cd Backend && npm run start:dev",
+        "start:dev:frontend": "cd Frontend && npm run dev"
+    }
+}
