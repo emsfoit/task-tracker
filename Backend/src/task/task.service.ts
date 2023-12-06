@@ -36,7 +36,6 @@ export class TaskService {
   }
 
   async getTaskById(id: number) {
-    return 'h';
     return await this.prisma.task.findUnique({
       where: { id },
     });
